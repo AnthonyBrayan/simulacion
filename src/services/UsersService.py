@@ -1,5 +1,6 @@
 from src.database.db_mysql import get_connection;
 from src.models.usersModel import Users;
+from werkzeug.security import generate_password_hash
 
 class UsersService():
 
@@ -15,7 +16,7 @@ class UsersService():
                 print(result)
 
             connection.close()
-            return 'Este es el método get, se imprime en consola'
+            return 'Este es el método get, se imprime en consola, hola'
         except Exception as ex:
             print(ex)
 
@@ -31,8 +32,10 @@ class UsersService():
                 id_usertype = user.usertype
                 id_person= user.person
 
+                encripted_password = generate_password_hash(password,'pbkdf2:sha256',30)
+
                 cursor.execute("INSERT INTO users (id_users ,name_user, password, id_person , id_usertype ) "+
-                "VALUES ({0}, '{1}', '{2}', {3}, {4});".format(id_user,nameUser,password,id_usertype,id_person))
+                "VALUES ({0}, '{1}', '{2}', {3}, {4});".format(id_user,nameUser,encripted_password,id_person,id_usertype))
                 connection.commit()
 
             connection.close()
