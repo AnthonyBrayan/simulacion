@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify,request
-
+from src.utils.Security import Security
 from src.models.usersModel import Users
 
 from src.services.AuthService import AuthService
@@ -18,6 +18,7 @@ def login_users():
     print(Authenticated_user)
 
     if(Authenticated_user != None):
-        return jsonify({'success':True})
+        encode_toke= Security.generate_token(Authenticated_user)
+        return jsonify({'success':True, 'token':encode_toke})
     else:
         return jsonify({'success':False})
