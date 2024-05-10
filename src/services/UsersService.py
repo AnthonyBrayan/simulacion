@@ -8,15 +8,21 @@ class UsersService():
     def get_user(cls):
         try:
             connection= get_connection()
-            print(connection)
+            user=[]
 
             with connection.cursor() as cursor:
                 cursor.execute('CALL sp_consutarusuarios ()')
                 result= cursor.fetchall()
                 print(result)
 
+                for row in result:
+                    users= Users(int(row[0]),row[1], row[2],row[3],row[4])
+                    user.append(users.to_json())
+
+                    print(user)
+
             connection.close()
-            return 'Este es el método get, se imprime en consola, hola'
+            return user
         except Exception as ex:
             print(ex)
 

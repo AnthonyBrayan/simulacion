@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 
 from src.services.UsersService import UsersService
 from src.models.usersModel import Users
@@ -28,10 +28,12 @@ main = Blueprint('users_blueprint',__name__)
 @main.route('/',methods=['GET'])
 def get_users():
 
-    get_user=UsersService.get_user()
-    print(get_user)
+    get_user= UsersService.get_user()
 
-    return 'Esto se ve en la página, GET'
+    if len(get_user) > 0:
+     return jsonify({'success': True, 'user':get_user})
+    else:
+     return jsonify({'success': False})
 
 @main.route('/post',methods=['POST'])
 def post_users():

@@ -25,11 +25,11 @@ class Security ():
                 'exp':current_tiem+datetime.timedelta(minutes=30),
                 #Datos
                 'id_user': user.id_user,
-                'id_rol': user.usertype.id_usertype,
                 'name_user': user.person.name_person,
+                'id_rol': user.usertype.id_usertype,
                 'name_rol': user.usertype.nombre_usertype
-                
             }
+
             return jwt.encode(payload, cls.jwt_key, algorithm="HS256")
         
         except Exception as ex:

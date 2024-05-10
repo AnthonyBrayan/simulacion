@@ -5,3 +5,12 @@ class Users():
         self.password = password
         self.person = person
         self.usertype = usertype
+
+    def to_json(self):
+        return{
+            'id':self.id_user,
+            'lasname':self.name_user,
+            'password':self.password,
+            'person':self.person,
+            'userType':self.usertype
+        }
